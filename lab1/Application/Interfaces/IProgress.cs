@@ -1,4 +1,6 @@
-namespace Application.Interfaces.IProgress;
+using Application.Models;
+
+namespace Application.Interfaces;
 
 public interface IProgress
 {

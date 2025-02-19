@@ -1,17 +1,18 @@
-using Application.Interfaces.IProgress;
+using Application.Interfaces;
 
-namespace Application.Entities;
+namespace Application.Models;
 
 public class ProgressBar
 {
     public event EventHandler? ProgressBarUpdated;
     public string Name { get; set; }
     public int Length { get; set; } = 100;
-    public int CurrentPercentage { get; set; } = 0;
-    public int CurrentPosition { get; set; } = 0;
+    public int CurrentPercentage { get; set; }
+    public int CurrentPosition { get; set; }
 
-    public ProgressBar(IProgress progress)
+    public ProgressBar(IProgress progress, string name)
     {
+        Name = name;
         progress.ProgressChanged += (sender, args) =>
         {
             var newPercentage = (int)(args.Progress * 100);

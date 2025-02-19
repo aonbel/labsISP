@@ -1,11 +1,19 @@
-using Application.Interfaces.IProgress;
+using Application.Interfaces;
+using Application.Models;
 
-namespace Application;
+namespace Application.Services;
 
 public class IntegralSolver : IProgress
 {
+    public int ThreadCount 
+    {
+        set => _semaphore = new SemaphoreSlim(value, value);
+    } 
+    
+    private SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+    
     public Func<double, double> Function { get; set; } = Math.Sin;
-
+    
     public (double start, double end) Segment { get; set; } = (start: 0, end: 1);
 
     public int StepsCount { get; set; } = 100000000;
@@ -13,18 +21,17 @@ public class IntegralSolver : IProgress
     public int OptimizationCyclesCount { get; set; } = 100000;
 
     public double IntegralResult { get; private set; }
-
+    
     public void CountIntegral()
     {
-        Semaphore semaphore = new Semaphore(0, 1);
-
+        _semaphore.Wait();
+        
         var segmentLength = Segment.end - Segment.start;
         var step = segmentLength / StepsCount;
         IntegralResult = 0;
 
         for (var currentPosition = Segment.start; currentPosition < Segment.end; currentPosition += step)
         {
-            semaphore.WaitOne();
             
             IntegralResult += Function(currentPosition) * step;
 
@@ -35,9 +42,11 @@ public class IntegralSolver : IProgress
 
             ProgressChanged?.Invoke(this,
                 new ProgressEventArg { Progress = (currentPosition - Segment.start) / segmentLength });
-            
-            semaphore.Release();
         }
+        
+        ProgressChanged?.Invoke(this, new ProgressEventArg { Progress = 1 });
+        
+        _semaphore.Release();
     }
 
     public event EventHandler<ProgressEventArg>? ProgressChanged;

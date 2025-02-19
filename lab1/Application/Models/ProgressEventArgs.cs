@@ -1,4 +1,4 @@
-namespace Application.Interfaces.IProgress;
+namespace Application.Models;
 
 public class ProgressEventArg : EventArgs
 {

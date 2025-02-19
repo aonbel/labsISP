@@ -1,4 +1,4 @@
-using Application.Entities;
+using Application.Models;
 
 namespace Application.Services;
 
