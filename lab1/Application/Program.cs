@@ -20,8 +20,8 @@ public static class Program
         thread1.Start();
         thread2.Start();
         
-        progressBarsService.AddProgressBar(new ProgressBar(solver1, "lowest"));
-        progressBarsService.AddProgressBar(new ProgressBar(solver2, "highest"));
+        progressBarsService.AddAllThreadsFrom(solver1);
+        progressBarsService.AddAllThreadsFrom(solver2);
 
         while (thread1.IsAlive)
         {
@@ -31,7 +31,7 @@ public static class Program
         progressBarsService.ClearProgressBars();
         
         var solver = new IntegralSolver { StepsCount = 20000 };
-        progressBarsService.AddProgressBar(new ProgressBar(solver, "progress"));
+        progressBarsService.AddAllThreadsFrom(solver);
         
         var threads = new List<Thread>();
         for (var i = 0; i < 5; i++)
@@ -46,6 +46,7 @@ public static class Program
         }
 
         threads.Clear();
+        progressBarsService.ClearProgressBars();
         solver.ThreadCount = 3;
         
         for (var i = 0; i < 5; i++)

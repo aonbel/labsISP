@@ -1,3 +1,4 @@
+using Application.Interfaces;
 using Application.Models;
 
 namespace Application.Services;
@@ -6,13 +7,21 @@ public class ProgressBarsService
 {
     private readonly List<ProgressBar> _progressBars = [];
 
-    public void AddProgressBar(ProgressBar progressBar)
+    public void AddAllThreadsFrom(IProgress entity)
     {
-        _progressBars.Add(progressBar);
-
-        progressBar.ProgressBarUpdated += (sender, args) =>
+        entity.ProgressChanged += (sender, args) =>
         {
-            PrintProgressBars();
+            foreach (var t in _progressBars.Where(t => int.Parse(t.Name) == args.ThreadId))
+            {
+                t.Update(args.Progress);
+                return;
+            }
+            
+            _progressBars.Add(new ProgressBar { Name = args.ThreadId.ToString() });
+            _progressBars.Last().ProgressBarUpdated += (_, _) =>
+            {
+                PrintProgressBars();
+            };
         };
     }
 

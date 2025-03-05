@@ -10,20 +10,17 @@ public class ProgressBar
     public int CurrentPercentage { get; set; }
     public int CurrentPosition { get; set; }
 
-    public ProgressBar(IProgress progress, string name)
+    public void Update(double progress)
     {
-        Name = name;
-        progress.ProgressChanged += (sender, args) =>
+        var newPercentage = (int)(progress * 100);
+        var newPosition = (int)(progress * Length);
+        if (newPosition == CurrentPosition && newPercentage == CurrentPercentage)
         {
-            var newPercentage = (int)(args.Progress * 100);
-            var newPosition = (int)(args.Progress * Length);
-            if (newPosition != CurrentPosition || newPercentage != CurrentPercentage)
-            {
-                CurrentPercentage = newPercentage;
-                CurrentPosition = newPosition;
-                ProgressBarUpdated?.Invoke(this, EventArgs.Empty);
-            }
-        };
+            return;
+        }
+        CurrentPercentage = newPercentage;
+        CurrentPosition = newPosition;
+        ProgressBarUpdated?.Invoke(this, EventArgs.Empty);
     }
 
     public override string ToString()
