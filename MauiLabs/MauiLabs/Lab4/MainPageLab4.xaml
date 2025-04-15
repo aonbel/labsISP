@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiLabs.Lab4.Lab4"
+             Title="Integral Calculator">
+
+    <Grid RowDefinitions="Auto,Auto,Auto"
+          ColumnDefinitions="*"
+          Padding="30"
+          RowSpacing="20">
+        
+        <VerticalStackLayout Grid.Row="1" Spacing="10">
+            <Label Text="That program will calculate integral for sin from 0 to 1"/>
+            
+            <Label x:Name="Label"
+                   Text="Integral is not calculated yet"
+                   HorizontalOptions="Center"
+                   FontSize="16" />
+
+            <ProgressBar x:Name="ProgressBar"
+                         ProgressColor="SeaGreen"
+                         HeightRequest="20"
+                         BackgroundColor="Silver" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2"
+              ColumnDefinitions="*,*"
+              ColumnSpacing="15">
+
+            <Button x:Name="StartButton"
+                    Text="Start Calculation"
+                    Clicked="StartButton_OnClicked"
+                    Grid.Column="0" />
+
+            <Button x:Name="StopButton"
+                    Text="Cancel"
+                    Clicked="StopButton_OnClicked"
+                    Grid.Column="1" />
+        </Grid>
+    </Grid>
+</ContentPage>

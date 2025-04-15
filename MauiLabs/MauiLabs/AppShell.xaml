@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiLabs.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localLab3="clr-namespace:MauiLabs.Lab3"
+    xmlns:localLab4="clr-namespace:MauiLabs.Lab4"
+    xmlns:localLab5="clr-namespace:MauiLabs.Lab5"
+    FlyoutBehavior="Flyout"
+    Title="MauiLabs">
+    
+    <FlyoutItem Title="Lab1">
+        <ShellContent
+            Title="Calculator"
+            ContentTemplate="{DataTemplate localLab3:Lab3}"
+            Route="Lab3" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Lab2">
+        <ShellContent
+            Title="Async control"
+            ContentTemplate="{DataTemplate localLab4:Lab4}"
+            Route="Lab4"/>
+    </FlyoutItem>
+    
+    <FlyoutItem Title="Lab3">
+        <ShellContent
+            Title="SQlite"
+            ContentTemplate="{DataTemplate localLab5:Lab5}"
+            Route="Lab5"/>
+    </FlyoutItem>
+</Shell>
