@@ -23,7 +23,7 @@ public static class Program
         progressBarsService.AddAllThreadsFrom(solver1);
         progressBarsService.AddAllThreadsFrom(solver2);
 
-        while (thread1.IsAlive)
+        while (thread1.IsAlive && thread2.IsAlive)
         {
             Thread.Sleep(1000);
         }

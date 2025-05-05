@@ -1,5 +1,7 @@
 ﻿using MauiLabs.Lab5.Services;
 using MauiLabs.Lab5.Services.Interfaces;
+using MauiLabs.Lab6.Services;
+using MauiLabs.Lab6.Services.Interfaces;
 
 namespace MauiLabs;
 
@@ -15,6 +17,9 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+        
+        builder.Services.AddHttpClient<IRateService, RateService>(client => 
+            client.BaseAddress = new Uri("https://api.nbrb.by/"));
         
         builder.Services.AddTransient<IDbService, DbService>();
 

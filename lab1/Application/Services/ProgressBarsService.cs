@@ -9,19 +9,16 @@ public class ProgressBarsService
 
     public void AddAllThreadsFrom(IProgress entity)
     {
-        entity.ProgressChanged += (sender, args) =>
+        entity.ProgressChanged += (_, args) =>
         {
             foreach (var t in _progressBars.Where(t => int.Parse(t.Name) == args.ThreadId))
             {
                 t.Update(args.Progress);
                 return;
             }
-            
+
             _progressBars.Add(new ProgressBar { Name = args.ThreadId.ToString() });
-            _progressBars.Last().ProgressBarUpdated += (_, _) =>
-            {
-                PrintProgressBars();
-            };
+            _progressBars.Last().ProgressBarUpdated += (_, _) => { PrintProgressBars(); };
         };
     }
 

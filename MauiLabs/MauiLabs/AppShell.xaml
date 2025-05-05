@@ -6,6 +6,7 @@
     xmlns:localLab3="clr-namespace:MauiLabs.Lab3"
     xmlns:localLab4="clr-namespace:MauiLabs.Lab4"
     xmlns:localLab5="clr-namespace:MauiLabs.Lab5"
+    xmlns:localLab6="clr-namespace:MauiLabs.Lab6"
     FlyoutBehavior="Flyout"
     Title="MauiLabs">
     
@@ -29,4 +30,12 @@
             ContentTemplate="{DataTemplate localLab5:Lab5}"
             Route="Lab5"/>
     </FlyoutItem>
+    
+    <FlyoutItem Title="Lab4">
+        <ShellContent
+            Title="Api"
+            ContentTemplate="{DataTemplate localLab6:Lab6}"
+            Route="Lab6"/>
+    </FlyoutItem>
+    
 </Shell>

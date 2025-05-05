@@ -33,6 +33,6 @@ internal abstract class Program
         
         Task.WaitAll(writerTask, readerTask);
 
-        Console.WriteLine(await streamService.GetStatisticsAsync("computerBrands.json", brand => brand.Id > -1));
+        Console.WriteLine(await streamService.GetStatisticsAsync("computerBrands.json", brand => brand.Id > 10));
     }
 }
