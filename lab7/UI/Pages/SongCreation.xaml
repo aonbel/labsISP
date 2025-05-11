@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:UI.ViewModels"
+             x:Class="UI.Pages.SongCreationPageModel"
+             x:Name="SongCreationPage"
+             Title="Song creation page">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+            <Entry Placeholder="Enter song name"
+                   Text="{Binding SongName}" />
+
+            <Entry Placeholder="Enter song rating"
+                   Text="{Binding SongRating}"
+                   Keyboard="Numeric" />
+
+            <Entry Placeholder="Enter song length (MM:SS)"
+                   Text="{Binding SongLength}" />
+
+            <Button Text="Create song">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="Clicked"
+                                                    Command="{Binding BindingContext.CreateCommand, Source={x:Reference SongCreationPage}}" />
+                </Button.Behaviors>
+            </Button>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

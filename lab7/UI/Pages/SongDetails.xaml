@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:UI.ValueConverters"
+             x:Class="UI.Pages.SongDetailsPageModel"
+             x:Name="SongDetailsPage"
+             Title="Song details page">
+
+    <ContentPage.Resources>
+        <converters:SongViewModelToImageConverter x:Key="SongViewModelToImage" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Image Source="{Binding SongViewModel.Id, Converter={StaticResource SongViewModelToImage}}" />
+
+            <HorizontalStackLayout Spacing="25">
+                <Label Text="Song name:" />
+                <Label Text="{Binding SongViewModel.Name}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="25">
+                <Label Text="Song rating:" />
+                <Label Text="{Binding SongViewModel.Rating}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="25">
+                <Label Text="Song length:" />
+                <Label Text="{Binding SongViewModel.Data.Length}" />
+            </HorizontalStackLayout>
+
+            <Button Text="Back"
+                    Command="{Binding BindingContext.ReturnToArtistPageCommand, Source={x:Reference SongDetailsPage}}" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:UI.ValueConverters"
+             xmlns:models="clr-namespace:UI.ViewModels"
+             x:Class="UI.Pages.ArtistsPageModel"
+             x:Name="ArtistsPage"
+             Title="Artists page">
+
+    <ContentPage.Resources>
+        <converters:RatingToColorValueConverter x:Key="RatingToColor" />
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Appearing"
+            Command="{Binding BindingContext.UpdateGroupListCommand, Source={x:Reference ArtistsPage}}" /> 
+    </ContentPage.Behaviors>
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Picker ItemsSource="{Binding Artists, Mode=TwoWay}"
+                    SelectedItem="{Binding SelectedArtist}"
+                    Title="Select Artist">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="SelectedIndexChanged"
+                        Command="{Binding BindingContext.UpdateMembersListCommand, Source={x:Reference ArtistsPage}}" />
+                </Picker.Behaviors>
+            </Picker>
+
+            <Button Text="Create new artist">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Clicked"
+                        Command="{Binding BindingContext.ShowArtistCreationPageCommand, Source={x:Reference ArtistsPage}}" />
+                </Button.Behaviors>
+            </Button>
+
+            <Button Text="Create new song to the current artist">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Clicked"
+                        Command="{Binding BindingContext.ShowSongCreationPageCommand, Source={x:Reference ArtistsPage}}" />
+                </Button.Behaviors>
+            </Button>
+
+            <HorizontalStackLayout Spacing="25">
+                <Label Text="Artist age:" />
+                <Label Text="{Binding SelectedArtist.Age}" />
+            </HorizontalStackLayout>
+
+            <CollectionView x:Name="CollectionView" ItemsSource="{Binding Songs}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SongViewModel">
+                        <Border BackgroundColor="{Binding Rating, Converter={StaticResource RatingToColor}}">
+                            <HorizontalStackLayout Spacing="25">
+                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Rating}" />
+                                <Label HorizontalOptions="FillAndExpand" />
+                                <Button
+                                    Text="Edit"
+                                    Command="{Binding BindingContext.ShowSongUpdatePageCommand, Source={x:Reference ArtistsPage}}"
+                                    CommandParameter="{Binding}" />
+                                <Button
+                                    Text="Set image"
+                                    Command="{Binding BindingContext.UpdatePictureForSongCommand, Source={x:Reference ArtistsPage}}"
+                                    CommandParameter="{Binding}" />
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding BindingContext.ShowSongDetailsPageCommand, Source={x:Reference ArtistsPage}}"
+                                    CommandParameter="{Binding}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
