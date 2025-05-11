@@ -14,9 +14,9 @@
     </ContentPage.Resources>
 
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior 
+        <toolkit:EventToCommandBehavior
             EventName="Appearing"
-            Command="{Binding BindingContext.UpdateGroupListCommand, Source={x:Reference ArtistsPage}}" /> 
+            Command="{Binding BindingContext.UpdateGroupListCommand, Source={x:Reference ArtistsPage}}" />
     </ContentPage.Behaviors>
 
 
@@ -60,19 +60,20 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:SongViewModel">
                         <Border BackgroundColor="{Binding Rating, Converter={StaticResource RatingToColor}}">
-                            <HorizontalStackLayout Spacing="25">
-                                <Label Text="{Binding Name}" />
-                                <Label Text="{Binding Rating}" />
-                                <Label HorizontalOptions="FillAndExpand" />
-                                <Button
-                                    Text="Edit"
-                                    Command="{Binding BindingContext.ShowSongUpdatePageCommand, Source={x:Reference ArtistsPage}}"
-                                    CommandParameter="{Binding}" />
-                                <Button
-                                    Text="Set image"
-                                    Command="{Binding BindingContext.UpdatePictureForSongCommand, Source={x:Reference ArtistsPage}}"
-                                    CommandParameter="{Binding}" />
-                            </HorizontalStackLayout>
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="15">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="15">
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                    <Label Text="{Binding Rating}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <Button Grid.Column="1"
+                                        Text="Edit"
+                                        Command="{Binding BindingContext.ShowSongUpdatePageCommand, Source={x:Reference ArtistsPage}}"
+                                        CommandParameter="{Binding}" />
+                                <Button Grid.Column="2"
+                                        Text="Set image"
+                                        Command="{Binding BindingContext.UpdatePictureForSongCommand, Source={x:Reference ArtistsPage}}"
+                                        CommandParameter="{Binding}" />
+                            </Grid>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding BindingContext.ShowSongDetailsPageCommand, Source={x:Reference ArtistsPage}}"
